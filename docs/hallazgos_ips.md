@@ -113,6 +113,8 @@ administrativa dominante, lo que sugiere un patrón sistemático de la EPS
 más que un error puntual de proceso identificable y corregible de forma
 simple.
 
+**Validación estadística** : se aplicó una prueba de chi-cuadrado de independencia entre EPS y resultado de facturación (glosada/no glosada). El resultado (χ² = 32.27, p = 0.000036, gl = 7) confirma que la diferencia observada es estadísticamente significativa, descartando que se deba al azar.
+
 ## Recomendación
 
 1. Fortalecimiento del control interno y filtro de pre-radicación
@@ -147,7 +149,7 @@ Establecer un tablero de control de glosas: Monitorear periódicamente los indic
 ## Próximos pasos de análisis
 
 - [ ] Cruzar diagnóstico real (Capa 1) con grupo etario y sexo.
-- [ ] Prueba de significancia estadística (chi-cuadrado) para la diferencia
+- [X] Prueba de significancia estadística (chi-cuadrado) para la diferencia
   de tasa de glosa de Capital Salud vs. el resto (pendiente para la
   fase de Python/estadística del roadmap).
 - [ ] Analizar tasa de "no asistió"/cancelación de citas por especialidad,
