@@ -42,13 +42,22 @@ y motivo de glosa sí produjo resultados no calculados de antemano.
 
 ## Hallazgo 2 (Capa 1 — calidad de datos): limitación de la fuente oficial
 
-El archivo público contenía un error de codificación de caracteres en el
-nombre de una EPS ("MEDIMÁS" aparecía como "MEDIMµS"), presente en el
-archivo original independientemente del encoding de lectura probado
-(utf-8-sig, cp1252, latin-1). Se verificó que era un caso aislado (no hay
-otras EPS afectadas de las 62 en el dataset) y se corrigió mediante
+El archivo público presenta un problema **sistemático** de codificación de
+caracteres especiales: tildes y la letra Ñ fueron mal interpretadas en el
+archivo original, apareciendo como caracteres corruptos (`à` en lugar de
+`Ó`/`Í`, `¥` en lugar de `Ñ`, `µ` en casos como "MEDIMÁS"). Inicialmente se
+detectó y corrigió un solo caso ("MEDIMÁS EPS") tras una revisión visual de
+las 62 EPS del dataset, concluyendo erróneamente que era un caso aislado. Una
+revisión posterior, motivada por una discrepancia entre el conteo de EPS
+distintas en SQL (62) y en Power BI (64), reveló que el problema afectaba a
+más de 15 nombres de EPS (ej. "ASOCIACIÓN", "COMPAÑÍA", "NARIÑO", "CHOCÓ").
+
+Se corrigió mediante un reemplazo sistemático de caracteres vía
 `CREATE OR REPLACE TABLE ... AS SELECT` (el entorno sandbox de BigQuery no
-permite sentencias DML como UPDATE sin cuenta de facturación activa).
+permite `UPDATE`). La revisión visual de una lista de valores únicos no es
+un método confiable para detectar corrupción de encoding a escala — un
+chequeo programático (como comparar conteos entre dos herramientas) es lo
+que expuso el problema real.
 
 ## Hallazgo 3 (Capa 2 — sintética): oportunidad de citas por especialidad
 
